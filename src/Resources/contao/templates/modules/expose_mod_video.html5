@@ -1,0 +1,12 @@
+<?php $this->extend('block_unsearchable'); ?>
+
+<?php $this->block('content'); ?>
+
+<div class="video-description">
+    <?=$this->text?>
+</div>
+<div class="video-link">
+    <a href="<?=$this->link?>" target="_blank" rel="nofollow"><?=$this->label?></a>
+</div>
+
+<?php $this->endblock(); ?>

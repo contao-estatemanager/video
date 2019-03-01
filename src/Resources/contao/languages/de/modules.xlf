@@ -1,0 +1,40 @@
+<?xml version="1.0" ?>
+<xliff version="1.1">
+  <file datatype="php" original="src/Resources/contao-immo-manager-bundle/languages/en/modules.php" source-language="en" target-language="de">
+    <body>
+      <trans-unit id="FMD.video.0">
+        <source>Video</source>
+        <target>Video</target>
+      </trans-unit>
+      <trans-unit id="FMD.video.1">
+        <source>Ermöglicht die Ausgabe eines Video-Buttons mit einer Beschreibung</source>
+        <target>Ermöglicht die Ausgabe eines Video-Buttons mit einer Beschreibung</target>
+      </trans-unit>
+
+      <trans-unit id="FMD.first_pos.0">
+        <source>first</source>
+        <target>An erster Stelle</target>
+      </trans-unit>
+      <trans-unit id="FMD.first_pos.1">
+        <source>first</source>
+        <target>An erster Stelle einfügen</target>
+      </trans-unit>
+      <trans-unit id="FMD.second_pos.0">
+        <source>second</source>
+        <target>An zweiter Stelle</target>
+      </trans-unit>
+      <trans-unit id="FMD.second_pos.1">
+        <source>second</source>
+        <target>An zweiter Stelle einfügen</target>
+      </trans-unit>
+      <trans-unit id="FMD.last_pos.0">
+        <source>last</source>
+        <target>An letzter Stelle</target>
+      </trans-unit>
+      <trans-unit id="FMD.last_pos.1">
+        <source>last</source>
+        <target>An letzter Stelle einfügen</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

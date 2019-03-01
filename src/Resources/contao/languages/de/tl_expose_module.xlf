@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+<xliff version="1.1">
+  <file datatype="php" original="src/Resources/contao/languages/en/tl_expose_module.php" source-language="en" target-language="de">
+    <body>
+      <trans-unit id="tl_expose_module.video_legend">
+        <source>Video</source>
+        <target>Video</target>
+      </trans-unit>
+      <trans-unit id="tl_expose_module.addVideo.0">
+        <source>Show video</source>
+        <target>Video hinzufügen</target>
+      </trans-unit>
+      <trans-unit id="tl_expose_module.addVideo.1">
+        <source>Add a video to the gallery</source>
+        <target>Fügt ein Video, sofern vorhanden, in der Galerie hinzu</target>
+      </trans-unit>
+      <trans-unit id="tl_expose_module.videoPosition.0">
+        <source>Insert at position</source>
+        <target>An Position einfügen</target>
+      </trans-unit>
+      <trans-unit id="tl_expose_module.videoPosition.1">
+        <source>Indicate the position of the slide</source>
+        <target>Geben Sie die Position an, an welcher Stelle das Video ausgegeben werden soll</target>
+      </trans-unit>
+      <trans-unit id="tl_expose_module.videoTemplate.0">
+        <source>Individuelles Template für Videos</source>
+        <target>Individuelles Template für Videos</target>
+      </trans-unit>
+      <trans-unit id="tl_expose_module.videoTemplate.1">
+        <source>Hier können Sie das Standard-Template überschreiben.</source>
+        <target>Hier können Sie das Standard-Template überschreiben.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
