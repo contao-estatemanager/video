@@ -1,1 +1,7 @@
-<iframe src="<?=$this->link?>" frameborder="0"></iframe>
+<?php if ($this->addImage): ?>
+    <figure class="preview-image video">
+        <?php $this->insert('picture_default', $this->picture); ?>
+    </figure>
+<?php endif; ?>
+
+<iframe <?=$this->addImage ? 'data-' : ''?>src="<?=$this->link?>" class="<?=$this->class?>" width="<?=$this->playerWidth?>" height="<?=$this->playerHeight?>" frameborder="0"<?=$this->autoplay?' allow="autoplay"':''?><?=$this->fullscreen?' webkitallowfullscreen mozallowfullscreen allowfullscreen':''?>></iframe>

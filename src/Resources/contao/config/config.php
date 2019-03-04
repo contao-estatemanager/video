@@ -16,5 +16,5 @@ array_insert($GLOBALS['FE_EXPOSE_MOD']['media'], -1, array
 // HOOKS
 $GLOBALS['TL_HOOKS']['parseRealEstate'][] = array('Oveleon\\ContaoImmoManagerVideoBundle\\Video', 'parseRealEstate');
 $GLOBALS['TL_HOOKS']['parseRealEstate'][] = array('Oveleon\\ContaoImmoManagerVideoBundle\\Video', 'addStatusToken');
+$GLOBALS['TL_HOOKS']['parseSlideExposeGallery'][] = array('Oveleon\\ContaoImmoManagerVideoBundle\\Video', 'parseGallerySlide');
 $GLOBALS['TL_HOOKS']['compileExposeStatusToken'][] = array('Oveleon\\ContaoImmoManagerVideoBundle\\Video', 'addStatusToken');
-$GLOBALS['TL_HOOKS']['parseSlidesExposeGallery'][] = array('Oveleon\\ContaoImmoManagerVideoBundle\\Video', 'parseGallerySlides');

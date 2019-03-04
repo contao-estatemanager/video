@@ -3,30 +3,62 @@
   <file datatype="php" original="src/Resources/contao/languages/en/tl_expose_module.php" source-language="en" target-language="de">
     <body>
       <trans-unit id="tl_expose_module.video_legend">
-        <source>Video</source>
-        <target>Video</target>
-      </trans-unit>
-      <trans-unit id="tl_expose_module.addVideo.0">
-        <source>Show video</source>
-        <target>Video hinzufügen</target>
-      </trans-unit>
-      <trans-unit id="tl_expose_module.addVideo.1">
-        <source>Add a video to the gallery</source>
-        <target>Fügt ein Video, sofern vorhanden, in der Galerie hinzu</target>
-      </trans-unit>
-      <trans-unit id="tl_expose_module.videoPosition.0">
-        <source>Insert at position</source>
-        <target>An Position einfügen</target>
-      </trans-unit>
-      <trans-unit id="tl_expose_module.videoPosition.1">
-        <source>Indicate the position of the slide</source>
-        <target>Geben Sie die Position an, an welcher Stelle das Video ausgegeben werden soll</target>
+        <source>Video-Einstellungen</source>
+        <target>Video-Einstellungen</target>
       </trans-unit>
       <trans-unit id="tl_expose_module.videoTemplate.0">
         <source>Individuelles Template für Videos</source>
         <target>Individuelles Template für Videos</target>
       </trans-unit>
       <trans-unit id="tl_expose_module.videoTemplate.1">
+        <source>Hier können Sie das Standard-Template überschreiben.</source>
+        <target>Hier können Sie das Standard-Template überschreiben.</target>
+      </trans-unit>
+      <trans-unit id="tl_expose_module.videoAutoplay.0">
+        <source>Autoplay</source>
+        <target>Automatisch starten</target>
+      </trans-unit>
+      <trans-unit id="tl_expose_module.videoAutoplay.1">
+        <source>Startet das Video sobald es sichbar ist.</source>
+        <target>Startet das Video sobald es sichbar ist.</target>
+      </trans-unit>
+      <trans-unit id="tl_expose_module.videoControls.0">
+        <source>Controls</source>
+        <target>Steuerelemente anzeigen</target>
+      </trans-unit>
+      <trans-unit id="tl_expose_module.videoControls.1">
+        <source>Video-Steuerelemente wie Play, Stop, Pause, werden angezeigt.</source>
+        <target>Video-Steuerelemente wie Play, Stop, Pause, werden angezeigt.</target>
+      </trans-unit>
+      <trans-unit id="tl_expose_module.videoFullscreen.0">
+        <source>Allow fullscreen</source>
+        <target>Vollbild erlauben</target>
+      </trans-unit>
+      <trans-unit id="tl_expose_module.videoFullscreen.1">
+        <source>Erlaubt dem Besucher das Video im Vollbild anzuschauen.</source>
+        <target>Erlaubt dem Besucher das Video im Vollbild anzuschauen.</target>
+      </trans-unit>
+      <trans-unit id="tl_expose_module.addVideoPreviewImage.0">
+        <source>Vorschaubild verwenden</source>
+        <target>Vorschaubild verwenden</target>
+      </trans-unit>
+      <trans-unit id="tl_expose_module.addVideoPreviewImage.1">
+        <source>Gibt ein Vorschaubild aus. Sofern kein eigenes Bild ausgewählt wurde, wird das Titelbild der Immobolie ausgegeben</source>
+        <target>Gibt ein Vorschaubild aus. Sofern kein eigenes Bild ausgewählt wurde, wird das Titelbild der Immobolie ausgegeben</target>
+      </trans-unit>
+      <trans-unit id="tl_expose_module.videoPreviewImage.0">
+        <source>Eigenes Vorschaubild</source>
+        <target>Eigenes Vorschaubild</target>
+      </trans-unit>
+      <trans-unit id="tl_expose_module.videoPreviewImage.1">
+        <source>Hier haben Sie die Möglichkeit ein eigenes Vorschaubild zu definieren</source>
+        <target>Hier haben Sie die Möglichkeit ein eigenes Vorschaubild zu definieren</target>
+      </trans-unit>
+      <trans-unit id="tl_expose_module.videoGalleryTemplate.0">
+        <source>Individuelles Video-Template</source>
+        <target>Individuelles Video-Template</target>
+      </trans-unit>
+      <trans-unit id="tl_expose_module.videoGalleryTemplate.1">
         <source>Hier können Sie das Standard-Template überschreiben.</source>
         <target>Hier können Sie das Standard-Template überschreiben.</target>
       </trans-unit>

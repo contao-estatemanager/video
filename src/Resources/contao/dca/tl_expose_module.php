@@ -8,12 +8,12 @@
  */
 
 // Add a new selector field
-$GLOBALS['TL_DCA']['tl_expose_module']['palettes']['__selector__'][] = 'addVideo';
+$GLOBALS['TL_DCA']['tl_expose_module']['palettes']['__selector__'][] = 'addVideoPreviewImage';
 
 // Add field to subpalettes
 array_insert($GLOBALS['TL_DCA']['tl_expose_module']['subpalettes'], 0, array
 (
-    'addVideo' => 'videoPosition'
+    'addVideoPreviewImage' => 'videoPreviewImage'
 ));
 
 // Add field
@@ -24,22 +24,41 @@ array_insert($GLOBALS['TL_DCA']['tl_expose_module']['palettes'], -1, array
 
 // Add fields
 array_insert($GLOBALS['TL_DCA']['tl_expose_module']['fields'], -1, array(
-    'addVideo'  => array
+    'videoAutoplay'  => array
     (
-        'label'                     => &$GLOBALS['TL_LANG']['tl_expose_module']['addVideo'],
+        'label'                     => &$GLOBALS['TL_LANG']['tl_expose_module']['videoAutoplay'],
+        'inputType'                 => 'checkbox',
+        'eval'                      => array('tl_class' => 'w50 m12 clr'),
+        'sql'                       => "char(1) NOT NULL default '0'",
+    ),
+    'videoControls'  => array
+    (
+        'label'                     => &$GLOBALS['TL_LANG']['tl_expose_module']['videoControls'],
+        'inputType'                 => 'checkbox',
+        'eval'                      => array('tl_class' => 'w50 m12'),
+        'sql'                       => "char(1) NOT NULL default '0'",
+    ),
+    'videoFullscreen'  => array
+    (
+        'label'                     => &$GLOBALS['TL_LANG']['tl_expose_module']['videoFullscreen'],
+        'inputType'                 => 'checkbox',
+        'eval'                      => array('tl_class' => 'w50 m12'),
+        'sql'                       => "char(1) NOT NULL default '0'",
+    ),
+    'addVideoPreviewImage'  => array
+    (
+        'label'                     => &$GLOBALS['TL_LANG']['tl_expose_module']['addVideoPreviewImage'],
         'inputType'                 => 'checkbox',
         'eval'                      => array('tl_class' => 'w50 m12', 'submitOnChange'=>true),
         'sql'                       => "char(1) NOT NULL default '0'",
     ),
-    'videoPosition' => array
+    'videoPreviewImage' => array
     (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_expose_module']['videoPosition'],
+        'label'                   => &$GLOBALS['TL_LANG']['tl_expose_module']['videoPreviewImage'],
         'exclude'                 => true,
-        'inputType'               => 'select',
-        'options'                 => array('first_pos', 'second_pos', 'last_pos'),
-        'eval'                    => array('tl_class'=>'w50'),
-        'reference'               => &$GLOBALS['TL_LANG']['FMD'],
-        'sql'                     => "varchar(16) NOT NULL default ''"
+        'inputType'               => 'fileTree',
+        'eval'                    => array('fieldType'=>'radio', 'filesOnly'=>true, 'tl_class'=>'clr'),
+        'sql'                     => "binary(16) NULL"
     ),
     'videoTemplate' => array
     (
@@ -68,10 +87,15 @@ array_insert($GLOBALS['TL_DCA']['tl_expose_module']['fields']['statusTokens']['o
     'video'
 ));
 
+// Extend immo manager expose module gallery options
+array_insert($GLOBALS['TL_DCA']['tl_expose_module']['fields']['galleryModules']['options'], -1, array(
+    'video'
+));
+
 // Extend the gallery palettes
 Contao\CoreBundle\DataContainer\PaletteManipulator::create()
     ->addLegend('video_legend', 'image_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_BEFORE)
-    ->addField(array('addVideo'), 'video_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_APPEND)
+    ->addField(array('videoAutoplay','videoControls','videoFullscreen','addVideoPreviewImage'), 'video_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_APPEND)
     ->addField(array('videoGalleryTemplate'), 'template_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_APPEND)
     ->applyToPalette('gallery', 'tl_expose_module')
 ;

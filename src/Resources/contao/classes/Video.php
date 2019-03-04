@@ -54,9 +54,9 @@ class Video
      * @param $realEstate
      * @param $context
      */
-    public function parseGallerySlides($objTemplate, &$arrSlides, $realEstate, $context)
+    public function parseGallerySlide($objTemplate, $module, &$arrSlides, $realEstate, $context)
     {
-        if (!!$context->addVideo)
+        if ($module === 'video')
         {
             $arrLinks = static::collectVideoLinks($realEstate->links, 1);
 
@@ -68,28 +68,84 @@ class Video
             // create Template
             $objVideoGalleryTemplate = new \FrontendTemplate($context->videoGalleryTemplate);
 
-            // In current version is only one value supported
+            // In current version is only one video supported
             $link = $arrLinks[0];
 
+            // get video type
+            $videoType = static::getVideoType($link);
+
+            // generate link with attributes
+            $settings = array(
+                'autoplay'   => $context->addVideoPreviewImage || $context->videoAutoplay ? 1 : 0,
+                'controls'   => !!$context->videoControls ? 1 : 0,
+                'fullscreen' => !!$context->videoFullscreen ? 1 : 0,
+            );
+
+            $link = static::generateAttributeLink($link, $settings, $videoType);
+
             // set template information
+            $objVideoGalleryTemplate->class = $videoType;
             $objVideoGalleryTemplate->link = $link;
+            $objVideoGalleryTemplate->autoplay = $settings['autoplay'];
+            $objVideoGalleryTemplate->fullscreen = !!$context->videoFullscreen;
+            $objVideoGalleryTemplate->addImage = false;
+            $objVideoGalleryTemplate->playerWidth = 100;
+            $objVideoGalleryTemplate->playerHeight = 100;
 
-            $index = 0;
+            // get player size by image size
+            $customImageSize = false;
 
-            switch($context->videoPosition)
+            if ($context->imgSize != '')
             {
-                case 'second_pos':
-                    $index = 1;
-                    break;
+                $size = \StringUtil::deserialize($context->imgSize);
 
-                case 'last_pos':
-                    $index = count($arrSlides);
-                    break;
+                if ($size[0] > 0 || $size[1] > 0 || is_numeric($size[2]))
+                {
+                    $customImageSize = true;
+                    $objVideoGalleryTemplate->playerWidth = $size[0];
+                    $objVideoGalleryTemplate->playerHeight = $size[1];
+                }
             }
 
-            \array_insert($arrSlides, $index, array(
-                $objVideoGalleryTemplate->parse()
-            ));
+            // add preview image
+            if(!!$context->addVideoPreviewImage)
+            {
+                if($context->videoPreviewImage)
+                {
+                    // add own preview image
+                    $fileId = $context->videoPreviewImage;
+                }
+                else
+                {
+                    // add main image from real estate
+                    $fileId = $realEstate->getMainImage();
+                }
+
+                if($fileId)
+                {
+                    $objModel = \FilesModel::findByUuid($fileId);
+
+                    // Add an image
+                    if ($objModel !== null && is_file(TL_ROOT . '/' . $objModel->path))
+                    {
+                        $arrImage = array();
+
+                        // Override the default image size
+                        if($customImageSize)
+                        {
+                            $arrImage['size'] = $context->imgSize;
+                        }
+
+                        $arrImage['singleSRC'] = $objModel->path;
+                        $context->addImageToTemplate($objVideoGalleryTemplate, $arrImage, null, null, $objModel);
+
+                        $objVideoGalleryTemplate->addImage = true;
+                    }
+                }
+            }
+
+            // add new slide
+            $arrSlides[] = $objVideoGalleryTemplate->parse();
         }
     }
 
@@ -128,10 +184,6 @@ class Video
     /**
      * Return video links as array
      *
-     * Supported vendors:
-     * - youtube
-     * - vimeo
-     *
      * @param $links
      * @param null $max
      *
@@ -150,7 +202,7 @@ class Video
 
         foreach ($links as $link)
         {
-            if(preg_match('/vimeo(?:\.com|\.de)|youtu(?:\.be|be\.com|be\.de|\.de)/', $link) === 1)
+            if(static::getVideoType($link))
             {
                 $arrLinks[] = $link;
 
@@ -161,5 +213,101 @@ class Video
         }
 
         return $arrLinks;
+    }
+
+    /**
+     * Return video type as string
+     *
+     * Supported vendors:
+     * - youtube
+     * - vimeo
+     *
+     * @param $link
+     *
+     * @return string|boolean
+     */
+    public static function getVideoType($link)
+    {
+        // youtube
+        if(preg_match('/youtu(?:\.be|be\.com|be\.de|\.de)/', $link) === 1)
+        {
+            return 'youtube';
+        }
+
+        // vimeo
+        elseif(preg_match('/vimeo(?:\.com|\.de)/', $link) === 1)
+        {
+            return 'vimeo';
+        }
+
+        return false;
+    }
+
+    /**
+     * Generate a valid link with attributes
+     *
+     * @param $videoType
+     * @param $settings
+     * @param $link
+     *
+     * @return string
+     */
+    public static function generateAttributeLink($link, $settings, $videoType=null)
+    {
+        if($videoType===null)
+        {
+            $videoType = static::getVideoType($link);
+        }
+
+        $defaultParams = array();
+        $arrSettings = array();
+
+        switch($videoType)
+        {
+            case 'youtube':
+                // default parameters
+                $defaultParams = array(
+                    'modestbranding' => 1,
+                    'enablejsapi'    => 1,
+                    'showinfo'       => 0,
+                    'version'        => 3,
+                    'rel'            => 0
+                );
+
+                // user settings
+                $arrSettings = array(
+                    'autoplay' => $settings['autoplay'],
+                    'controls' => $settings['controls'],
+                    'fs'       => $settings['fullscreen'],
+                );
+                break;
+
+            case 'vimeo':
+                // default parameters
+                $defaultParams = array(
+                    'api'         => 1,
+                    'transparent' => 0,
+                    'muted'       => $settings['autoplay'], // need muted option for allow autoplay
+                );
+
+                // user settings
+                $arrSettings = array(
+                    'autoplay' => $settings['autoplay'],
+                );
+                break;
+        }
+
+        // parse and cleaning up the link
+        $link = \StringUtil::restoreBasicEntities($link);
+        $link = \StringUtil::decodeEntities($link);
+
+        $arrLink = parse_url( $link );
+        parse_str($arrLink['query'], $query);
+
+        // merge params
+        $param = array_merge($query, $arrSettings, $defaultParams);
+
+        // create link with parameters
+        return $arrLink['scheme'] . '://' . $arrLink['host'] . $arrLink['path'] . '?' . http_build_query($param);
     }
 }

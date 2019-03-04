@@ -1,0 +1,120 @@
+<script>
+    /**
+     * Add video support for expose module gallery
+     *
+     * A player instance is added to the iFrame.
+     * This enables you to call the functions supported by the vendors from outside via iframe.player.
+     * Example for Youtube:
+     * - yourIframe.player.pauseVideo()
+     * - yourIframe.player.playVideo()
+     * - yourIframe.player.stopVideo()
+     *
+     * You can also check the status of the video by listen to the following custom functions:
+     * - video.onStateChange
+     * - video.onReady
+     */
+
+    // globals
+    var videoStateChangeEvent = new CustomEvent('video.onStateChange', {detail: {type: null, data: null}});
+    var videoOnReadyEvent = new CustomEvent('video.onReady', {detail: {type: null, data: null}});
+    var videoPlayerCount = 0;
+
+    // bind preview image click
+    if(!!document.querySelector('figure.preview-image.video')) {
+        var previewButton = document.querySelectorAll('figure.preview-image.video');
+
+        for (var i=0; i<previewButton.length; i++){
+            previewButton[i].addEventListener('click', onClickVideoPreviewImage);
+        }
+    }
+
+    // check if youtube support is needed
+    if(!!document.querySelector('iframe.youtube')) {
+
+        // inject YT-API script async
+        var ytAPI = document.createElement('script');
+            ytAPI.src = "//www.youtube.com/player_api";
+            ytAPI.classList.add('yt-async');
+
+        var head = document.getElementsByTagName('head')[0];
+            head.appendChild(ytAPI);
+    }
+
+    // global api callback
+    function onYouTubePlayerAPIReady() {
+        console.info('YouTube-API loaded');
+
+        // load players without preview image
+        initializeYouTubePlayers();
+    }
+
+    function initializeYouTubePlayers(iframe) {
+        var youtubePlayers = [];
+
+        // youtube player
+        if (typeof iframe !== "undefined") {
+            youtubePlayers = [iframe];
+        } else {
+            youtubePlayers = document.querySelectorAll('iframe.youtube[src]');
+        }
+
+        if (youtubePlayers.length) {
+            // initialize and add players
+            for (var i = 0; i < youtubePlayers.length; i++) {
+
+                var playerId = 'gallery-player-' + videoPlayerCount;
+
+                youtubePlayers[i].id = playerId;
+                youtubePlayers[i].playerType = 'youtube';
+                youtubePlayers[i].player = new YT.Player(playerId, {
+                    events: {
+                        'onReady': onYouTubePlayerReady,
+                        'onStateChange': onYouTubePlayerStateChange
+                    }
+                });
+
+                videoPlayerCount++;
+            }
+        }
+    }
+
+    function initializeVimeoPlayers(iframe){
+        // ToDo: Initialize Vimeo-Players
+    }
+
+    function onYouTubePlayerReady(e){
+        // dispatch custom event
+        videoOnReadyEvent.detail.type = 'youtube';
+        videoOnReadyEvent.detail.data = e;
+
+        document.dispatchEvent(videoOnReadyEvent);
+    }
+
+    function onYouTubePlayerStateChange(e){
+        // dispatch custom event
+        videoStateChangeEvent.detail.type = 'youtube';
+        videoStateChangeEvent.detail.data = e;
+
+        document.dispatchEvent(videoStateChangeEvent);
+    }
+
+    function onClickVideoPreviewImage(e) {
+        e.preventDefault();
+
+        var iframe = this.nextElementSibling;
+
+        if(iframe.nodeName === 'IFRAME') {
+            iframe.setAttribute("src", iframe.getAttribute('data-src'));
+            iframe.removeAttribute("data-src");
+
+            if(iframe.classList.contains('youtube'))
+                initializeYouTubePlayers(iframe);
+
+            if(iframe.classList.contains('vimeo'))
+                initializeVimeoPlayers(iframe);
+
+            this.classList.add('is-clicked');
+            this.removeEventListener('click', onClickVideoPreviewImage);
+        }
+    }
+</script>
