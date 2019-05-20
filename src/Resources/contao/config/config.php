@@ -7,14 +7,19 @@
  * @license   https://github.com/oveleon/contao-immo-manager-bundle/blob/master/LICENSE
  */
 
-// Add expose module
-array_insert($GLOBALS['FE_EXPOSE_MOD']['media'], -1, array
-(
-    'video' => '\\Oveleon\\ContaoImmoManagerVideoBundle\\ExposeModuleVideo',
-));
+// IMMOMANAGER
+$GLOBALS['TL_IMMOMANAGER_ADDONS'][] = array('Oveleon\\ContaoImmoManagerVideoBundle', 'AddonManager');
 
-// HOOKS
-$GLOBALS['TL_HOOKS']['parseRealEstate'][] = array('Oveleon\\ContaoImmoManagerVideoBundle\\Video', 'parseRealEstate');
-$GLOBALS['TL_HOOKS']['parseRealEstate'][] = array('Oveleon\\ContaoImmoManagerVideoBundle\\Video', 'addStatusToken');
-$GLOBALS['TL_HOOKS']['parseSlideExposeGallery'][] = array('Oveleon\\ContaoImmoManagerVideoBundle\\Video', 'parseGallerySlide');
-$GLOBALS['TL_HOOKS']['compileExposeStatusToken'][] = array('Oveleon\\ContaoImmoManagerVideoBundle\\Video', 'addStatusToken');
+if(Oveleon\ContaoImmoManagerVideoBundle\AddonManager::valid()){
+    // Add expose module
+    array_insert($GLOBALS['FE_EXPOSE_MOD']['media'], -1, array
+    (
+        'video' => '\\Oveleon\\ContaoImmoManagerVideoBundle\\ExposeModuleVideo',
+    ));
+
+    // HOOKS
+    $GLOBALS['TL_HOOKS']['parseRealEstate'][] = array('Oveleon\\ContaoImmoManagerVideoBundle\\Video', 'parseRealEstate');
+    $GLOBALS['TL_HOOKS']['parseRealEstate'][] = array('Oveleon\\ContaoImmoManagerVideoBundle\\Video', 'addStatusToken');
+    $GLOBALS['TL_HOOKS']['parseSlideExposeGallery'][] = array('Oveleon\\ContaoImmoManagerVideoBundle\\Video', 'parseGallerySlide');
+    $GLOBALS['TL_HOOKS']['compileExposeStatusToken'][] = array('Oveleon\\ContaoImmoManagerVideoBundle\\Video', 'addStatusToken');
+}
