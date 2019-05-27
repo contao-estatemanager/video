@@ -1,13 +1,14 @@
 <?php
 /**
- * This file is part of Oveleon ImmoManager.
+ * This file is part of Contao EstateManager.
  *
- * @link      https://github.com/oveleon/contao-immo-manager-bundle
- * @copyright Copyright (c) 2018-2019  Oveleon GbR (https://www.oveleon.de)
- * @license   https://github.com/oveleon/contao-immo-manager-bundle/blob/master/LICENSE
+ * @link      https://www.contao-estatemanager.com/
+ * @source    https://github.com/contao-estatemanager/video
+ * @copyright Copyright (c) 2019  Oveleon GbR (https://www.oveleon.de)
+ * @license   https://www.contao-estatemanager.com/lizenzbedingungen.html
  */
 
-if(Oveleon\ContaoImmoManagerVideoBundle\AddonManager::valid()){
+if(ContaoEstateManager\Video\AddonManager::valid()){
     // Add field
     array_insert($GLOBALS['TL_DCA']['tl_module']['fields'], -1, array(
         'addVideo'  => array
@@ -22,13 +23,13 @@ if(Oveleon\ContaoImmoManagerVideoBundle\AddonManager::valid()){
             'default'                 => 'real_estate_video_default',
             'exclude'                 => true,
             'inputType'               => 'select',
-            'options_callback'        => array('tl_module_immo_manager_video', 'getRealEstateVideoTemplates'),
+            'options_callback'        => array('tl_module_estate_manager_video', 'getRealEstateVideoTemplates'),
             'eval'                    => array('tl_class'=>'w50'),
             'sql'                     => "varchar(64) NOT NULL default ''"
         )
     ));
 
-    // Extend immo manager statusTokens field options
+    // Extend estate manager statusTokens field options
     array_insert($GLOBALS['TL_DCA']['tl_module']['fields']['statusTokens']['options'], -1, array(
         'video'
     ));
@@ -47,7 +48,7 @@ if(Oveleon\ContaoImmoManagerVideoBundle\AddonManager::valid()){
  *
  * @author Daniele Sciannimanica <daniele@oveleon.de>
  */
-class tl_module_immo_manager_video extends Backend
+class tl_module_estate_manager_video extends Backend
 {
 
     /**
