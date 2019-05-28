@@ -40,6 +40,7 @@ if(ContaoEstateManager\Video\AddonManager::valid()){
         ->addField(array('addVideo'), 'video_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_APPEND)
         ->addField(array('realEstateVideoTemplate'), 'template_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_APPEND)
         ->applyToPalette('realEstateList', 'tl_module')
+        ->applyToPalette('realEstateResultList', 'tl_module')
     ;
 }
 
