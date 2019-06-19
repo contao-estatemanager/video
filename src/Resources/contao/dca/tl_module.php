@@ -36,8 +36,7 @@ if(ContaoEstateManager\Video\AddonManager::valid()){
 
     // Extend the default palettes
     Contao\CoreBundle\DataContainer\PaletteManipulator::create()
-        ->addLegend('video_legend', 'template_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_BEFORE)
-        ->addField(array('addVideo'), 'video_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_APPEND)
+        ->addField(array('addVideo'), 'item_extension_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_APPEND)
         ->addField(array('realEstateVideoTemplate'), 'template_legend', Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_APPEND)
         ->applyToPalette('realEstateList', 'tl_module')
         ->applyToPalette('realEstateResultList', 'tl_module')
