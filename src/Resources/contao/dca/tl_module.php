@@ -23,7 +23,7 @@ if(ContaoEstateManager\Video\AddonManager::valid()){
             'default'                 => 'real_estate_itemext_video_default',
             'exclude'                 => true,
             'inputType'               => 'select',
-            'options_callback'        => array('tl_module_estate_manager_video', 'getRealEstateVideoTemplates'),
+            'options_callback'        => array('tl_module_estate_manager', 'getRealEstateExtensionTemplates'),
             'eval'                    => array('tl_class'=>'w50'),
             'sql'                     => "varchar(64) NOT NULL default ''"
         )
@@ -41,32 +41,4 @@ if(ContaoEstateManager\Video\AddonManager::valid()){
         ->applyToPalette('realEstateList', 'tl_module')
         ->applyToPalette('realEstateResultList', 'tl_module')
     ;
-}
-
-/**
- * Provide miscellaneous methods that are used by the data configuration array.
- *
- * @author Daniele Sciannimanica <daniele@oveleon.de>
- */
-class tl_module_estate_manager_video extends Backend
-{
-
-    /**
-     * Import the back end user object
-     */
-    public function __construct()
-    {
-        parent::__construct();
-        $this->import('BackendUser', 'User');
-    }
-
-    /**
-     * Return all real estate list templates as array
-     *
-     * @return array
-     */
-    public function getRealEstateVideoTemplates()
-    {
-        return $this->getTemplateGroup('real_estate_video_');
-    }
 }
