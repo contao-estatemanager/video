@@ -20,7 +20,7 @@ if(ContaoEstateManager\Video\AddonManager::valid()){
         ),
         'realEstateVideoTemplate' => array(
             'label'                   => &$GLOBALS['TL_LANG']['tl_module']['realEstateVideoTemplate'],
-            'default'                 => 'real_estate_video_default',
+            'default'                 => 'real_estate_itemext_video_default',
             'exclude'                 => true,
             'inputType'               => 'select',
             'options_callback'        => array('tl_module_estate_manager_video', 'getRealEstateVideoTemplates'),
