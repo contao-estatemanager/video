@@ -15,7 +15,7 @@ use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
-use Oveleon\ContaoImmoManagerVideoBundle\ContaoImmoManagerVideoBundle;
+use Oveleon\ContaoImmoManagerVideoBundle\EstateManagerVideo;
 
 class Plugin implements BundlePluginInterface
 {
@@ -25,9 +25,9 @@ class Plugin implements BundlePluginInterface
     public function getBundles(ParserInterface $parser): array
     {
         return [
-            BundleConfig::create(ContaoImmoManagerVideoBundle::class)
-                ->setLoadAfter([ContaoCoreBundle::class])
-                ->setReplace(['immo-manager-video']),
+            BundleConfig::create(EstateManagerVideo::class)
+                ->setLoadAfter([ContaoCoreBundle::class, EstateManager::class])
+                ->setReplace(['estatemanager-video']),
         ];
     }
 }

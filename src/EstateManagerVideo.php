@@ -15,6 +15,6 @@ namespace Oveleon\ContaoImmoManagerVideoBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class ContaoImmoManagerVideoBundle extends Bundle
+class EstateManagerVideo extends Bundle
 {
 }
