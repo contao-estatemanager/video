@@ -2,10 +2,6 @@
 <xliff version="1.1">
   <file datatype="php" original="src/Resources/contao/languages/en/tl_module.php" source-language="en" target-language="de">
     <body>
-      <trans-unit id="tl_module.video_legend">
-        <source>Video</source>
-        <target>Video</target>
-      </trans-unit>
       <trans-unit id="tl_module.addVideo.0">
         <source>Show video</source>
         <target>Video hinzufügen</target>
@@ -15,12 +11,12 @@
         <target>Fügt, sofern vorhanden, einen Video-Link hinzu</target>
       </trans-unit>
       <trans-unit id="tl_module.realEstateVideoTemplate.0">
-        <source>Individual Video-Template</source>
-        <target>Individuelles Video-Template</target>
+        <source>Real Estate Template Extension: Video</source>
+        <target>Immobilien Template Erweiterung: Video</target>
       </trans-unit>
       <trans-unit id="tl_module.realEstateVideoTemplate.1">
-        <source>Here you can overwrite the default template for the video</source>
-        <target>Hier können Sie das Standard-Template für Videos überschreiben</target>
+        <source>Here you can overwrite the default template for videos within a real estate template</source>
+        <target>Hier können Sie das Standard-Template für Videos innerhalb eines Immobilien Templates überschreiben</target>
       </trans-unit>
     </body>
   </file>

@@ -1,12 +1,13 @@
 <?php
 /**
- * This file is part of Oveleon ImmoManager.
+ * This file is part of Contao EstateManager.
  *
- * @link      https://github.com/oveleon/contao-immo-manager-bundle
- * @copyright Copyright (c) 2018-2019  Oveleon GbR (https://www.oveleon.de)
- * @license   https://github.com/oveleon/contao-immo-manager-bundle/blob/master/LICENSE
+ * @link      https://www.contao-estatemanager.com/
+ * @source    https://github.com/contao-estatemanager/video
+ * @copyright Copyright (c) 2019  Oveleon GbR (https://www.oveleon.de)
+ * @license   https://www.contao-estatemanager.com/lizenzbedingungen.html
  */
-if(Oveleon\ContaoImmoManagerVideoBundle\AddonManager::valid()){
+if(ContaoEstateManager\Video\AddonManager::valid()){
     // Add a new selector field
     $GLOBALS['TL_DCA']['tl_expose_module']['palettes']['__selector__'][] = 'addVideoPreviewImage';
 
@@ -66,7 +67,7 @@ if(Oveleon\ContaoImmoManagerVideoBundle\AddonManager::valid()){
             'default'                 => 'expose_mod_video',
             'exclude'                 => true,
             'inputType'               => 'select',
-            'options_callback'        => array('tl_expose_module_immo_manager_video', 'getVideoTemplates'),
+            'options_callback'        => array('tl_expose_module_estate_manager_video', 'getVideoTemplates'),
             'eval'                    => array('tl_class'=>'w50'),
             'sql'                     => "varchar(64) NOT NULL default ''"
         ),
@@ -76,18 +77,18 @@ if(Oveleon\ContaoImmoManagerVideoBundle\AddonManager::valid()){
             'default'                 => 'expose_mod_video_gallery_default',
             'exclude'                 => true,
             'inputType'               => 'select',
-            'options_callback'        => array('tl_expose_module_immo_manager_video', 'getVideoGalleryTemplates'),
+            'options_callback'        => array('tl_expose_module_estate_manager_video', 'getVideoGalleryTemplates'),
             'eval'                    => array('tl_class'=>'w50'),
             'sql'                     => "varchar(64) NOT NULL default ''"
         ),
     ));
 
-    // Extend immo manager statusTokens field options
+    // Extend estate manager statusTokens field options
     array_insert($GLOBALS['TL_DCA']['tl_expose_module']['fields']['statusTokens']['options'], -1, array(
         'video'
     ));
 
-    // Extend immo manager expose module gallery options
+    // Extend estate manager expose module gallery options
     array_insert($GLOBALS['TL_DCA']['tl_expose_module']['fields']['galleryModules']['options'], -1, array(
         'video'
     ));
@@ -106,7 +107,7 @@ if(Oveleon\ContaoImmoManagerVideoBundle\AddonManager::valid()){
  *
  * @author Daniele Sciannimanica <daniele@oveleon.de>
  */
-class tl_expose_module_immo_manager_video extends \Backend
+class tl_expose_module_estate_manager_video extends \Backend
 {
 
     /**

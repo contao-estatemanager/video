@@ -1,15 +1,16 @@
 <?php
 /**
- * This file is part of Oveleon ImmoManager.
+ * This file is part of Contao EstateManager.
  *
- * @link      https://github.com/oveleon/contao-immo-manager-bundle
- * @copyright Copyright (c) 2018-2019  Oveleon GbR (https://www.oveleon.de)
- * @license   https://github.com/oveleon/contao-immo-manager-bundle/blob/master/LICENSE
+ * @link      https://www.contao-estatemanager.com/
+ * @source    https://github.com/contao-estatemanager/video
+ * @copyright Copyright (c) 2019  Oveleon GbR (https://www.oveleon.de)
+ * @license   https://www.contao-estatemanager.com/lizenzbedingungen.html
  */
 
-namespace Oveleon\ContaoImmoManagerVideoBundle;
+namespace ContaoEstateManager\Video;
 
-use Oveleon\ContaoImmoManagerBundle\ImmoManager;
+use ContaoEstateManager\EstateManager;
 
 class AddonManager
 {
@@ -108,7 +109,7 @@ class AddonManager
 
         if (static::$initialized === false)
         {
-            static::$valid = ImmoManager::checkLicenses(\Config::get(static::$key), static::$licenses, static::$key);
+            static::$valid = EstateManager::checkLicenses(\Config::get(static::$key), static::$licenses, static::$key);
             static::$initialized = true;
         }
 
