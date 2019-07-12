@@ -12,6 +12,8 @@
      * You can also check the status of the video by listen to the following custom functions:
      * - video.onStateChange
      * - video.onReady
+     *
+     * @author Daniele Sciannimanica <daniele@oveleon.de>
      */
 
     // globals

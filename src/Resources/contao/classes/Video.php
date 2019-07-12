@@ -68,7 +68,7 @@ class Video
             // create Template
             $objVideoGalleryTemplate = new \FrontendTemplate($context->videoGalleryTemplate);
 
-            // In current version is only one video supported
+            // In current version only one video is supported
             $link = $arrLinks[0];
 
             // get video type
@@ -261,6 +261,11 @@ class Video
 
         $defaultParams = array();
         $arrSettings = array();
+        $parsedLink = '';
+
+        // parse and cleaning up the link
+        $link = \StringUtil::restoreBasicEntities($link);
+        $link = \StringUtil::decodeEntities($link);
 
         switch($videoType)
         {
@@ -280,6 +285,13 @@ class Video
                     'controls' => $settings['controls'],
                     'fs'       => $settings['fullscreen'],
                 );
+
+                $matches = array();
+
+                if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $link, $matches))
+                {
+                    $parsedLink = 'https://www.youtube.com/embed/' . $matches[1];
+                }
                 break;
 
             case 'vimeo':
@@ -294,18 +306,26 @@ class Video
                 $arrSettings = array(
                     'autoplay' => $settings['autoplay'],
                 );
+
+                $matches = array();
+
+                if (preg_match('%vimeo\.com/(?:channels/(?:\w+/)?|groups/(?:[^/]+)/videos/|album/(?:\d+)/video/)?(\d+)(?:$|/|\?)%i', $link, $matches))
+                {
+                    $parsedLink = 'https://player.vimeo.com/video/' . $matches[1];
+                }
                 break;
         }
-
-        // parse and cleaning up the link
-        $link = \StringUtil::restoreBasicEntities($link);
-        $link = \StringUtil::decodeEntities($link);
 
         $arrLink = parse_url( $link );
         parse_str($arrLink['query'], $query);
 
         // merge params
         $param = array_merge($query, $arrSettings, $defaultParams);
+
+        if($parsedLink)
+        {
+            return $parsedLink . '?' . http_build_query($param);
+        }
 
         // create link with parameters
         return $arrLink['scheme'] . '://' . $arrLink['host'] . $arrLink['path'] . '?' . http_build_query($param);
