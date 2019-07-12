@@ -58,94 +58,93 @@ class Video
     {
         if ($module === 'video')
         {
-            $arrLinks = static::collectVideoLinks($realEstate->links, 1);
+            $arrLinks = static::collectVideoLinks($realEstate->links);
 
             if(!count($arrLinks))
             {
                 return;
             }
 
-            // create Template
-            $objVideoGalleryTemplate = new \FrontendTemplate($context->videoGalleryTemplate);
+            foreach ($arrLinks as $link){
+                // create Template
+                $objVideoGalleryTemplate = new \FrontendTemplate($context->videoGalleryTemplate);
 
-            // In current version only one video is supported
-            $link = $arrLinks[0];
+                // get video type
+                $videoType = static::getVideoType($link);
 
-            // get video type
-            $videoType = static::getVideoType($link);
+                // generate link with attributes
+                $settings = array(
+                    'autoplay'   => $context->addVideoPreviewImage || $context->videoAutoplay ? 1 : 0,
+                    'controls'   => !!$context->videoControls ? 1 : 0,
+                    'fullscreen' => !!$context->videoFullscreen ? 1 : 0,
+                );
 
-            // generate link with attributes
-            $settings = array(
-                'autoplay'   => $context->addVideoPreviewImage || $context->videoAutoplay ? 1 : 0,
-                'controls'   => !!$context->videoControls ? 1 : 0,
-                'fullscreen' => !!$context->videoFullscreen ? 1 : 0,
-            );
+                $link = static::generateAttributeLink($link, $settings, $videoType);
 
-            $link = static::generateAttributeLink($link, $settings, $videoType);
+                // set template information
+                $objVideoGalleryTemplate->class = $videoType;
+                $objVideoGalleryTemplate->link = $link;
+                $objVideoGalleryTemplate->autoplay = $settings['autoplay'];
+                $objVideoGalleryTemplate->fullscreen = !!$context->videoFullscreen;
+                $objVideoGalleryTemplate->addImage = false;
+                $objVideoGalleryTemplate->playerWidth = 100;
+                $objVideoGalleryTemplate->playerHeight = 100;
 
-            // set template information
-            $objVideoGalleryTemplate->class = $videoType;
-            $objVideoGalleryTemplate->link = $link;
-            $objVideoGalleryTemplate->autoplay = $settings['autoplay'];
-            $objVideoGalleryTemplate->fullscreen = !!$context->videoFullscreen;
-            $objVideoGalleryTemplate->addImage = false;
-            $objVideoGalleryTemplate->playerWidth = 100;
-            $objVideoGalleryTemplate->playerHeight = 100;
+                // get player size by image size
+                $customImageSize = false;
 
-            // get player size by image size
-            $customImageSize = false;
-
-            if ($context->imgSize != '')
-            {
-                $size = \StringUtil::deserialize($context->imgSize);
-
-                if ($size[0] > 0 || $size[1] > 0 || is_numeric($size[2]))
+                if ($context->imgSize != '')
                 {
-                    $customImageSize = true;
-                    $objVideoGalleryTemplate->playerWidth = $size[0];
-                    $objVideoGalleryTemplate->playerHeight = $size[1];
-                }
-            }
+                    $size = \StringUtil::deserialize($context->imgSize);
 
-            // add preview image
-            if(!!$context->addVideoPreviewImage)
-            {
-                if($context->videoPreviewImage)
-                {
-                    // add own preview image
-                    $fileId = $context->videoPreviewImage;
-                }
-                else
-                {
-                    // add main image from real estate
-                    $fileId = $realEstate->getMainImage();
-                }
-
-                if($fileId)
-                {
-                    $objModel = \FilesModel::findByUuid($fileId);
-
-                    // Add an image
-                    if ($objModel !== null && is_file(TL_ROOT . '/' . $objModel->path))
+                    if ($size[0] > 0 || $size[1] > 0 || is_numeric($size[2]))
                     {
-                        $arrImage = array();
-
-                        // Override the default image size
-                        if($customImageSize)
-                        {
-                            $arrImage['size'] = $context->imgSize;
-                        }
-
-                        $arrImage['singleSRC'] = $objModel->path;
-                        $context->addImageToTemplate($objVideoGalleryTemplate, $arrImage, null, null, $objModel);
-
-                        $objVideoGalleryTemplate->addImage = true;
+                        $customImageSize = true;
+                        $objVideoGalleryTemplate->playerWidth = $size[0];
+                        $objVideoGalleryTemplate->playerHeight = $size[1];
                     }
                 }
-            }
 
-            // add new slide
-            $arrSlides[] = $objVideoGalleryTemplate->parse();
+                // add preview image
+                if(!!$context->addVideoPreviewImage)
+                {
+                    if($context->videoPreviewImage)
+                    {
+                        // add own preview image
+                        $fileId = $context->videoPreviewImage;
+                    }
+                    else
+                    {
+                        // add main image from real estate
+                        $fileId = $realEstate->getMainImage();
+                    }
+
+                    if($fileId)
+                    {
+                        $objModel = \FilesModel::findByUuid($fileId);
+
+                        // Add an image
+                        if ($objModel !== null && is_file(TL_ROOT . '/' . $objModel->path))
+                        {
+                            $arrImage = array();
+
+                            // Override the default image size
+                            if($customImageSize)
+                            {
+                                $arrImage['size'] = $context->imgSize;
+                            }
+
+                            $arrImage['singleSRC'] = $objModel->path;
+                            $context->addImageToTemplate($objVideoGalleryTemplate, $arrImage, null, null, $objModel);
+
+                            $objVideoGalleryTemplate->addImage = true;
+                        }
+                    }
+                }
+
+                // add new slide
+                $arrSlides[] = $objVideoGalleryTemplate->parse();
+            }
         }
     }
 
@@ -327,7 +326,7 @@ class Video
             return $parsedLink . '?' . http_build_query($param);
         }
 
-        // create link with parameters
+        // create link with parameters as fallback
         return $arrLink['scheme'] . '://' . $arrLink['host'] . $arrLink['path'] . '?' . http_build_query($param);
     }
 }
