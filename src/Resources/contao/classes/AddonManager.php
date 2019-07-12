@@ -102,7 +102,7 @@ class AddonManager
 
     public static function valid()
     {
-        if(\Environment::get('requestUri') === '/contao/install')
+        if(strpos(\Environment::get('requestUri'), '/contao/install') !== false)
         {
             return true;
         }

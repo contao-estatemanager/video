@@ -7,6 +7,7 @@
  * @copyright Copyright (c) 2019  Oveleon GbR (https://www.oveleon.de)
  * @license   https://www.contao-estatemanager.com/lizenzbedingungen.html
  */
+
 declare(strict_types=1);
 
 namespace ContaoEstateManager\Video\ContaoManager;
@@ -26,8 +27,8 @@ class Plugin implements BundlePluginInterface
     {
         return [
             BundleConfig::create(EstateManagerVideo::class)
-                ->setLoadAfter([ContaoCoreBundle::class])
-                ->setReplace(['estatemanagervideo']),
+                ->setLoadAfter([ContaoCoreBundle::class, EstateManager::class])
+                ->setReplace(['estatemanager-video']),
         ];
     }
 }
