@@ -19,6 +19,7 @@
     // globals
     var videoStateChangeEvent = new CustomEvent('video.onStateChange', {detail: {type: null, data: null}});
     var videoOnReadyEvent = new CustomEvent('video.onReady', {detail: {type: null, data: null}});
+    var onClickPreviewEvent = new CustomEvent('video.onClickPreview', {detail: {type: null, data: null}});
     var videoPlayerCount = 0;
 
     // bind preview image click
@@ -104,6 +105,11 @@
         e.preventDefault();
 
         var iframe = this.nextElementSibling;
+
+        onClickPreviewEvent.detail.type = 'youtube';
+        onClickPreviewEvent.detail.data = e;
+
+        document.dispatchEvent(onClickPreviewEvent);
 
         if(iframe.nodeName === 'IFRAME') {
             iframe.setAttribute("src", iframe.getAttribute('data-src'));
