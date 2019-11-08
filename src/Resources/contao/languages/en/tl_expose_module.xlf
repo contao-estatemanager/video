@@ -1,66 +1,51 @@
 <?xml version="1.0" ?>
 <xliff version="1.1">
-  <file datatype="php" original="src/Resources/contao/languages/en/tl_expose_module.php" source-language="en" target-language="de">
+  <file datatype="php" original="src/Resources/contao/languages/en/tl_expose_module.php" source-language="en">
     <body>
       <trans-unit id="tl_expose_module.video_legend">
         <source>Video settings</source>
-        <target>Video-Einstellungen</target>
       </trans-unit>
       <trans-unit id="tl_expose_module.videoTemplate.0">
         <source>Individual template for videos</source>
-        <target>Individuelles Template für Videos</target>
       </trans-unit>
       <trans-unit id="tl_expose_module.videoTemplate.1">
         <source>Here you can overwrite the default template.</source>
-        <target>Hier können Sie das Standard-Template überschreiben.</target>
       </trans-unit>
       <trans-unit id="tl_expose_module.videoAutoplay.0">
         <source>Autoplay</source>
-        <target>Automatisch starten</target>
       </trans-unit>
       <trans-unit id="tl_expose_module.videoAutoplay.1">
         <source>Plays the video as soon as it is visible.</source>
-        <target>Spielt das Video ab, sobald es sichtbar ist.</target>
       </trans-unit>
       <trans-unit id="tl_expose_module.videoControls.0">
         <source>Display controls</source>
-        <target>Steuerelemente anzeigen</target>
       </trans-unit>
       <trans-unit id="tl_expose_module.videoControls.1">
         <source>Video controls such as Play, Stop, Pause are displayed.</source>
-        <target>Video-Steuerelemente wie Play, Stop, Pause, werden angezeigt.</target>
       </trans-unit>
       <trans-unit id="tl_expose_module.videoFullscreen.0">
         <source>Allow fullscreen</source>
-        <target>Vollbild erlauben</target>
       </trans-unit>
       <trans-unit id="tl_expose_module.videoFullscreen.1">
         <source>Allows the visitor to view the video in full screen.</source>
-        <target>Erlaubt dem Besucher das Video im Vollbild anzuschauen.</target>
       </trans-unit>
       <trans-unit id="tl_expose_module.addVideoPreviewImage.0">
         <source>Use thumbnail image</source>
-        <target>Vorschaubild verwenden</target>
       </trans-unit>
       <trans-unit id="tl_expose_module.addVideoPreviewImage.1">
         <source>Displays a thumbnail image. If no image has been selected, the title picture of the real estate is displayed.</source>
-        <target>Gibt ein Vorschaubild aus. Sofern kein eigenes Bild ausgewählt wurde, wird das Titelbild der Immobilie ausgegeben.</target>
       </trans-unit>
       <trans-unit id="tl_expose_module.videoPreviewImage.0">
         <source>Own thumbnail</source>
-        <target>Eigenes Vorschaubild</target>
       </trans-unit>
       <trans-unit id="tl_expose_module.videoPreviewImage.1">
         <source>Here you can define your own thumbnail.</source>
-        <target>Hier können Sie ein eigenes Vorschaubild definieren.</target>
       </trans-unit>
       <trans-unit id="tl_expose_module.videoGalleryTemplate.0">
         <source>Individual video template</source>
-        <target>Individuelles Video-Template</target>
       </trans-unit>
       <trans-unit id="tl_expose_module.videoGalleryTemplate.1">
         <source>Here you can overwrite the default template.</source>
-        <target>Hier können Sie das Standard-Template überschreiben.</target>
       </trans-unit>
     </body>
   </file>

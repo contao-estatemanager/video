@@ -1,39 +1,31 @@
 <?xml version="1.0" ?>
 <xliff version="1.1">
-  <file datatype="php" original="src/Resources/contao/languages/en/modules.php" source-language="en" target-language="de">
+  <file datatype="php" original="src/Resources/contao/languages/en/modules.php" source-language="en">
     <body>
       <trans-unit id="FMD.video.0">
         <source>Video</source>
-        <target>Video</target>
       </trans-unit>
       <trans-unit id="FMD.video.1">
         <source>Allows the output of a video button with a description.</source>
-        <target>Ermöglicht die Ausgabe eines Video-Buttons mit einer Beschreibung.</target>
       </trans-unit>
 
       <trans-unit id="FMD.first_pos.0">
         <source>First place</source>
-        <target>An erster Stelle</target>
       </trans-unit>
       <trans-unit id="FMD.first_pos.1">
         <source>Insert at first position.</source>
-        <target>An erster Stelle einfügen.</target>
       </trans-unit>
       <trans-unit id="FMD.second_pos.0">
         <source>Second place</source>
-        <target>An zweiter Stelle</target>
       </trans-unit>
       <trans-unit id="FMD.second_pos.1">
         <source>Insert at second position.</source>
-        <target>An zweiter Stelle einfügen.</target>
       </trans-unit>
       <trans-unit id="FMD.last_pos.0">
         <source>Last place</source>
-        <target>An letzter Stelle</target>
       </trans-unit>
       <trans-unit id="FMD.last_pos.1">
         <source>Insert at last position.</source>
-        <target>An letzter Stelle einfügen.</target>
       </trans-unit>
     </body>
   </file>
