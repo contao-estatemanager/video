@@ -59,10 +59,20 @@ class ExposeModuleVideo extends ExposeModule
         if(!count($arrLinks))
         {
             $this->isEmpty = true;
+            return;
         }
 
         // In current version is only one value supported
         $link = $arrLinks[0];
+
+        // generate link with attributes
+        $settings = array(
+            'autoplay'   => 1, // ToDo: Determine, if field should be added to expose module
+            'controls'   => 1, // ToDo: Add field to expose module
+            'fullscreen' => 1, // ToDo: Add field to expose module
+        );
+
+        $link = Video::generateAttributeLink($link, $settings);
 
         // set template information
         $this->Template->link = $link;
