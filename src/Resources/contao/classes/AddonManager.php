@@ -10,6 +10,8 @@
 
 namespace ContaoEstateManager\Video;
 
+use Contao\Config;
+use Contao\Environment;
 use ContaoEstateManager\EstateManager;
 
 class AddonManager
@@ -102,14 +104,14 @@ class AddonManager
 
     public static function valid()
     {
-        if(strpos(\Environment::get('requestUri'), '/contao/install') !== false)
+        if(strpos(Environment::get('requestUri'), '/contao/install') !== false)
         {
             return true;
         }
 
         if (static::$initialized === false)
         {
-            static::$valid = EstateManager::checkLicenses(\Config::get(static::$key), static::$licenses, static::$key);
+            static::$valid = EstateManager::checkLicenses(Config::get(static::$key), static::$licenses, static::$key);
             static::$initialized = true;
         }
 

@@ -10,6 +10,9 @@
 
 namespace ContaoEstateManager\Video;
 
+use Contao\FilesModel;
+use Contao\FrontendTemplate;
+use Contao\StringUtil;
 use ContaoEstateManager\Translator;
 
 class Video
@@ -33,7 +36,7 @@ class Video
             }
 
             // create Template
-            $objVideoTemplate = new \FrontendTemplate($context->realEstateVideoTemplate);
+            $objVideoTemplate = new FrontendTemplate($context->realEstateVideoTemplate);
 
             // In current version is only one value supported
             $link = $arrLinks[0];
@@ -67,7 +70,7 @@ class Video
 
             foreach ($arrLinks as $link){
                 // create Template
-                $objVideoGalleryTemplate = new \FrontendTemplate($context->videoGalleryTemplate);
+                $objVideoGalleryTemplate = new FrontendTemplate($context->videoGalleryTemplate);
 
                 // get video type
                 $videoType = static::getVideoType($link);
@@ -95,7 +98,7 @@ class Video
 
                 if ($context->imgSize != '')
                 {
-                    $size = \StringUtil::deserialize($context->imgSize);
+                    $size = StringUtil::deserialize($context->imgSize);
 
                     if ($size[0] > 0 || $size[1] > 0 || is_numeric($size[2]))
                     {
@@ -121,7 +124,7 @@ class Video
 
                     if($fileId)
                     {
-                        $objModel = \FilesModel::findByUuid($fileId);
+                        $objModel = FilesModel::findByUuid($fileId);
 
                         // Add an image
                         if ($objModel !== null && is_file(TL_ROOT . '/' . $objModel->path))
@@ -157,7 +160,7 @@ class Video
      */
     public function addStatusToken(&$objTemplate, $realEstate, $context)
     {
-        $tokens = \StringUtil::deserialize($context->statusTokens);
+        $tokens = StringUtil::deserialize($context->statusTokens);
 
         if(!$tokens){
             return;
@@ -263,8 +266,8 @@ class Video
         $parsedLink = '';
 
         // parse and cleaning up the link
-        $link = \StringUtil::restoreBasicEntities($link);
-        $link = \StringUtil::decodeEntities($link);
+        $link = StringUtil::restoreBasicEntities($link);
+        $link = StringUtil::decodeEntities($link);
 
         switch($videoType)
         {
