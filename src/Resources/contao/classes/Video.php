@@ -24,13 +24,13 @@ class Video
      * @param $realEstate
      * @param $context
      */
-    public function parseRealEstate(&$objTemplate, $realEstate, $context)
+    public function parseRealEstate(&$objTemplate, $realEstate, $context): void
     {
         if (!!$context->addVideo)
         {
             $arrLinks = static::collectVideoLinks($realEstate->links, 1);
 
-            if(!count($arrLinks))
+            if($arrLinks === null)
             {
                 return;
             }
@@ -53,17 +53,18 @@ class Video
      * Parse video gallery template and add them to slides
      *
      * @param $objTemplate
+     * @param $module
      * @param $arrSlides
      * @param $realEstate
      * @param $context
      */
-    public function parseGallerySlide($objTemplate, $module, &$arrSlides, $realEstate, $context)
+    public function parseGallerySlide($objTemplate, $module, &$arrSlides, $realEstate, $context): void
     {
         if ($module === 'video')
         {
             $arrLinks = static::collectVideoLinks($realEstate->links);
 
-            if(!count($arrLinks))
+            if($arrLinks === null)
             {
                 return;
             }
@@ -158,7 +159,7 @@ class Video
      * @param $realEstate
      * @param $context
      */
-    public function addStatusToken(&$objTemplate, $realEstate, $context)
+    public function addStatusToken(&$objTemplate, $realEstate, $context): void
     {
         $tokens = StringUtil::deserialize($context->statusTokens);
 
@@ -168,7 +169,7 @@ class Video
 
         $arrLinks = static::collectVideoLinks($realEstate->links, 1);
 
-        if (in_array('video', $tokens) && count($arrLinks))
+        if ($arrLinks !== null && in_array('video', $tokens))
         {
             $objTemplate->arrStatusTokens = array_merge(
                 $objTemplate->arrStatusTokens,
@@ -189,11 +190,11 @@ class Video
      * @param $links
      * @param null $max
      *
-     * @return array
+     * @return null|array
      */
-    public static function collectVideoLinks($links, $max=null)
+    public static function collectVideoLinks($links, $max=null): ?array
     {
-        $arrLinks = array();
+        $arrLinks = null;
 
         $index = 1;
 
@@ -226,9 +227,9 @@ class Video
      *
      * @param $link
      *
-     * @return string|boolean
+     * @return string|null
      */
-    public static function getVideoType($link)
+    public static function getVideoType($link): ?string
     {
         // youtube
         if(preg_match('/youtu(?:\.be|be\.com|be\.de|\.de)/', $link) === 1)
@@ -242,7 +243,7 @@ class Video
             return 'vimeo';
         }
 
-        return false;
+        return null;
     }
 
     /**
@@ -254,7 +255,7 @@ class Video
      *
      * @return string
      */
-    public static function generateAttributeLink($link, $settings, $videoType=null)
+    public static function generateAttributeLink($link, $settings, $videoType=null): string
     {
         if($videoType===null)
         {

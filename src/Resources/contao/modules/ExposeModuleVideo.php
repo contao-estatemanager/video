@@ -29,7 +29,7 @@ class ExposeModuleVideo extends ExposeModule
     protected $strTemplate = 'expose_mod_video';
 
     /**
-     * Do not display the module if there are no real etates
+     * Do not display the module if there are no real estates
      *
      * @return string
      */
@@ -58,26 +58,28 @@ class ExposeModuleVideo extends ExposeModule
     {
         $arrLinks = Video::collectVideoLinks($this->realEstate->links, 1);
 
-        if(!count($arrLinks))
+        if($arrLinks === null)
         {
             $this->isEmpty = true;
-            return;
         }
+        else
+        {
+            // In current version is only one value supported
+            $link = $arrLinks[0];
 
-        // In current version is only one value supported
-        $link = $arrLinks[0];
+            // generate link with attributes
+            $settings = array(
+                'autoplay'   => 1, // ToDo: Determine, if field should be added to expose module
+                'controls'   => 1, // ToDo: Add field to expose module
+                'fullscreen' => 1, // ToDo: Add field to expose module
+            );
 
-        // generate link with attributes
-        $settings = array(
-            'autoplay'   => 1, // ToDo: Determine, if field should be added to expose module
-            'controls'   => 1, // ToDo: Add field to expose module
-            'fullscreen' => 1, // ToDo: Add field to expose module
-        );
+            $link = Video::generateAttributeLink($link, $settings);
 
-        $link = Video::generateAttributeLink($link, $settings);
-
-        // set template information
-        $this->Template->link = $link;
+            // set template information
+            $this->Template->link = $link;
+        }
+        
         $this->Template->label = Translator::translateExpose('button_video');
     }
 }
