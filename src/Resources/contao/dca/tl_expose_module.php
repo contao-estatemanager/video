@@ -21,6 +21,7 @@ if(ContaoEstateManager\Video\AddonManager::valid()){
     $GLOBALS['TL_DCA']['tl_expose_module']['fields']['videoAutoplay'] = array
     (
         'label'                     => &$GLOBALS['TL_LANG']['tl_expose_module']['videoAutoplay'],
+        'exclude'                   => true,
         'inputType'                 => 'checkbox',
         'eval'                      => array('tl_class' => 'w50 m12 clr'),
         'sql'                       => "char(1) NOT NULL default '0'",
@@ -29,6 +30,7 @@ if(ContaoEstateManager\Video\AddonManager::valid()){
     $GLOBALS['TL_DCA']['tl_expose_module']['fields']['videoControls'] = array
     (
         'label'                     => &$GLOBALS['TL_LANG']['tl_expose_module']['videoControls'],
+        'exclude'                   => true,
         'inputType'                 => 'checkbox',
         'eval'                      => array('tl_class' => 'w50 m12'),
         'sql'                       => "char(1) NOT NULL default '0'",
@@ -37,6 +39,7 @@ if(ContaoEstateManager\Video\AddonManager::valid()){
     $GLOBALS['TL_DCA']['tl_expose_module']['fields']['videoFullscreen'] = array
     (
         'label'                     => &$GLOBALS['TL_LANG']['tl_expose_module']['videoFullscreen'],
+        'exclude'                   => true,
         'inputType'                 => 'checkbox',
         'eval'                      => array('tl_class' => 'w50 m12'),
         'sql'                       => "char(1) NOT NULL default '0'",
@@ -45,6 +48,7 @@ if(ContaoEstateManager\Video\AddonManager::valid()){
     $GLOBALS['TL_DCA']['tl_expose_module']['fields']['addVideoPreviewImage'] = array
     (
         'label'                     => &$GLOBALS['TL_LANG']['tl_expose_module']['addVideoPreviewImage'],
+        'exclude'                   => true,
         'inputType'                 => 'checkbox',
         'eval'                      => array('tl_class' => 'w50 m12', 'submitOnChange'=>true),
         'sql'                       => "char(1) NOT NULL default '0'",

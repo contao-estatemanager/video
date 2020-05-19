@@ -13,12 +13,14 @@ if(ContaoEstateManager\Video\AddonManager::valid()){
     $GLOBALS['TL_DCA']['tl_module']['fields']['addVideo'] = array
     (
         'label'                     => &$GLOBALS['TL_LANG']['tl_module']['addVideo'],
+        'exclude'                   => true,
         'inputType'                 => 'checkbox',
         'eval'                      => array('tl_class' => 'w50 m12'),
         'sql'                       => "char(1) NOT NULL default '0'",
     );
 
-    $GLOBALS['TL_DCA']['tl_module']['fields']['realEstateVideoTemplate'] = array(
+    $GLOBALS['TL_DCA']['tl_module']['fields']['realEstateVideoTemplate'] = array
+    (
         'label'                   => &$GLOBALS['TL_LANG']['tl_module']['realEstateVideoTemplate'],
         'default'                 => 'real_estate_itemext_video_default',
         'exclude'                 => true,
