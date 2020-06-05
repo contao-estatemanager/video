@@ -155,31 +155,19 @@ class Video
     /**
      * Add status token for video objects
      *
-     * @param $objTemplate
-     * @param $realEstate
+     * @param $validStatusToken
+     * @param $arrStatusTokens
      * @param $context
      */
-    public function addStatusToken(&$objTemplate, $realEstate, $context): void
+    public function addStatusToken($validStatusToken, &$arrStatusTokens, $context): void
     {
-        $tokens = StringUtil::deserialize($context->statusTokens);
+        $arrLinks = static::collectVideoLinks($context->links, 1);
 
-        if(!$tokens){
-            return;
-        }
-
-        $arrLinks = static::collectVideoLinks($realEstate->links, 1);
-
-        if ($arrLinks !== null && in_array('video', $tokens))
+        if (null !== $arrLinks && in_array('video', $validStatusToken))
         {
-            $objTemplate->arrStatusTokens = array_merge(
-                $objTemplate->arrStatusTokens,
-                array
-                (
-                    array(
-                        'value' => Translator::translateValue('videoObject'),
-                        'class' => 'video'
-                    )
-                )
+            $arrStatusTokens[] = array(
+                'value' => Translator::translateValue('videoObject'),
+                'class' => 'video'
             );
         }
     }
