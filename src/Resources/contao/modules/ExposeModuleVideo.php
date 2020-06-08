@@ -10,8 +10,10 @@
 
 namespace ContaoEstateManager\Video;
 
+use Contao\BackendTemplate;
 use ContaoEstateManager\ExposeModule;
 use ContaoEstateManager\Translator;
+use Patchwork\Utf8;
 
 /**
  * Expose module "video".
@@ -27,7 +29,7 @@ class ExposeModuleVideo extends ExposeModule
     protected $strTemplate = 'expose_mod_video';
 
     /**
-     * Do not display the module if there are no real etates
+     * Do not display the module if there are no real estates
      *
      * @return string
      */
@@ -35,7 +37,7 @@ class ExposeModuleVideo extends ExposeModule
     {
         if (TL_MODE == 'BE')
         {
-            $objTemplate = new \BackendTemplate('be_wildcard');
+            $objTemplate = new BackendTemplate('be_wildcard');
             $objTemplate->wildcard = '### ' . Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['video'][0]) . ' ###';
             $objTemplate->title = $this->headline;
             $objTemplate->id = $this->id;
@@ -56,26 +58,28 @@ class ExposeModuleVideo extends ExposeModule
     {
         $arrLinks = Video::collectVideoLinks($this->realEstate->links, 1);
 
-        if(!count($arrLinks))
+        if($arrLinks === null)
         {
             $this->isEmpty = true;
-            return;
         }
+        else
+        {
+            // In current version is only one value supported
+            $link = $arrLinks[0];
 
-        // In current version is only one value supported
-        $link = $arrLinks[0];
+            // generate link with attributes
+            $settings = array(
+                'autoplay'   => 1, // ToDo: Determine, if field should be added to expose module
+                'controls'   => 1, // ToDo: Add field to expose module
+                'fullscreen' => 1, // ToDo: Add field to expose module
+            );
 
-        // generate link with attributes
-        $settings = array(
-            'autoplay'   => 1, // ToDo: Determine, if field should be added to expose module
-            'controls'   => 1, // ToDo: Add field to expose module
-            'fullscreen' => 1, // ToDo: Add field to expose module
-        );
+            $link = Video::generateAttributeLink($link, $settings);
 
-        $link = Video::generateAttributeLink($link, $settings);
-
-        // set template information
-        $this->Template->link = $link;
+            // set template information
+            $this->Template->link = $link;
+        }
+        
         $this->Template->label = Translator::translateExpose('button_video');
     }
 }

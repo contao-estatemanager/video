@@ -10,6 +10,9 @@
 
 namespace ContaoEstateManager\Video;
 
+use Contao\FilesModel;
+use Contao\FrontendTemplate;
+use Contao\StringUtil;
 use ContaoEstateManager\Translator;
 
 class Video
@@ -21,19 +24,19 @@ class Video
      * @param $realEstate
      * @param $context
      */
-    public function parseRealEstate(&$objTemplate, $realEstate, $context)
+    public function parseRealEstate(&$objTemplate, $realEstate, $context): void
     {
         if (!!$context->addVideo)
         {
             $arrLinks = static::collectVideoLinks($realEstate->links, 1);
 
-            if(!count($arrLinks))
+            if($arrLinks === null)
             {
                 return;
             }
 
             // create Template
-            $objVideoTemplate = new \FrontendTemplate($context->realEstateVideoTemplate);
+            $objVideoTemplate = new FrontendTemplate($context->realEstateVideoTemplate);
 
             // In current version is only one value supported
             $link = $arrLinks[0];
@@ -50,24 +53,25 @@ class Video
      * Parse video gallery template and add them to slides
      *
      * @param $objTemplate
+     * @param $module
      * @param $arrSlides
      * @param $realEstate
      * @param $context
      */
-    public function parseGallerySlide($objTemplate, $module, &$arrSlides, $realEstate, $context)
+    public function parseGallerySlide($objTemplate, $module, &$arrSlides, $realEstate, $context): void
     {
         if ($module === 'video')
         {
             $arrLinks = static::collectVideoLinks($realEstate->links);
 
-            if(!count($arrLinks))
+            if($arrLinks === null)
             {
                 return;
             }
 
             foreach ($arrLinks as $link){
                 // create Template
-                $objVideoGalleryTemplate = new \FrontendTemplate($context->videoGalleryTemplate);
+                $objVideoGalleryTemplate = new FrontendTemplate($context->videoGalleryTemplate);
 
                 // get video type
                 $videoType = static::getVideoType($link);
@@ -95,7 +99,7 @@ class Video
 
                 if ($context->imgSize != '')
                 {
-                    $size = \StringUtil::deserialize($context->imgSize);
+                    $size = StringUtil::deserialize($context->imgSize);
 
                     if ($size[0] > 0 || $size[1] > 0 || is_numeric($size[2]))
                     {
@@ -121,7 +125,7 @@ class Video
 
                     if($fileId)
                     {
-                        $objModel = \FilesModel::findByUuid($fileId);
+                        $objModel = FilesModel::findByUuid($fileId);
 
                         // Add an image
                         if ($objModel !== null && is_file(TL_ROOT . '/' . $objModel->path))
@@ -151,31 +155,19 @@ class Video
     /**
      * Add status token for video objects
      *
-     * @param $objTemplate
-     * @param $realEstate
+     * @param $validStatusToken
+     * @param $arrStatusTokens
      * @param $context
      */
-    public function addStatusToken(&$objTemplate, $realEstate, $context)
+    public function addStatusToken($validStatusToken, &$arrStatusTokens, $context): void
     {
-        $tokens = \StringUtil::deserialize($context->statusTokens);
+        $arrLinks = static::collectVideoLinks($context->links, 1);
 
-        if(!$tokens){
-            return;
-        }
-
-        $arrLinks = static::collectVideoLinks($realEstate->links, 1);
-
-        if (in_array('video', $tokens) && count($arrLinks))
+        if (null !== $arrLinks && in_array('video', $validStatusToken))
         {
-            $objTemplate->arrStatusTokens = array_merge(
-                $objTemplate->arrStatusTokens,
-                array
-                (
-                    array(
-                        'value' => Translator::translateValue('videoObject'),
-                        'class' => 'video'
-                    )
-                )
+            $arrStatusTokens[] = array(
+                'value' => Translator::translateValue('videoObject'),
+                'class' => 'video'
             );
         }
     }
@@ -186,11 +178,11 @@ class Video
      * @param $links
      * @param null $max
      *
-     * @return array
+     * @return null|array
      */
-    public static function collectVideoLinks($links, $max=null)
+    public static function collectVideoLinks($links, $max=null): ?array
     {
-        $arrLinks = array();
+        $arrLinks = null;
 
         $index = 1;
 
@@ -223,9 +215,9 @@ class Video
      *
      * @param $link
      *
-     * @return string|boolean
+     * @return string|null
      */
-    public static function getVideoType($link)
+    public static function getVideoType($link): ?string
     {
         // youtube
         if(preg_match('/youtu(?:\.be|be\.com|be\.de|\.de)/', $link) === 1)
@@ -239,7 +231,7 @@ class Video
             return 'vimeo';
         }
 
-        return false;
+        return null;
     }
 
     /**
@@ -251,7 +243,7 @@ class Video
      *
      * @return string
      */
-    public static function generateAttributeLink($link, $settings, $videoType=null)
+    public static function generateAttributeLink($link, $settings, $videoType=null): string
     {
         if($videoType===null)
         {
@@ -263,8 +255,8 @@ class Video
         $parsedLink = '';
 
         // parse and cleaning up the link
-        $link = \StringUtil::restoreBasicEntities($link);
-        $link = \StringUtil::decodeEntities($link);
+        $link = StringUtil::restoreBasicEntities($link);
+        $link = StringUtil::decodeEntities($link);
 
         switch($videoType)
         {

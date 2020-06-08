@@ -5,8 +5,9 @@
 <div class="video-description">
     <?=$this->text?>
 </div>
-<div class="video-link">
-    <a href="<?=$this->link?>" target="_blank" rel="nofollow"><?=$this->label?></a>
-</div>
-
+<?php if($this->link): ?>
+    <div class="video-link">
+        <a href="<?=$this->link?>" target="_blank" rel="nofollow"><?=$this->label?></a>
+    </div>
+<?php endif; ?>
 <?php $this->endblock(); ?>

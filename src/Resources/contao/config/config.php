@@ -9,18 +9,14 @@
  */
 
 // ESTATEMANAGER
-$GLOBALS['TL_ESTATEMANAGER_ADDONS'][] = array('ContaoEstateManager\\Video', 'AddonManager');
+$GLOBALS['TL_ESTATEMANAGER_ADDONS'][] = array('ContaoEstateManager\Video', 'AddonManager');
 
 if(ContaoEstateManager\Video\AddonManager::valid()){
     // Add expose module
-    array_insert($GLOBALS['FE_EXPOSE_MOD']['media'], -1, array
-    (
-        'video' => '\\ContaoEstateManager\\Video\\ExposeModuleVideo',
-    ));
+    $GLOBALS['FE_EXPOSE_MOD']['media']['video'] = 'ContaoEstateManager\Video\ExposeModuleVideo';
 
-    // HOOKS
-    $GLOBALS['TL_HOOKS']['parseRealEstate'][] = array('ContaoEstateManager\\Video\\Video', 'parseRealEstate');
-    $GLOBALS['TL_HOOKS']['parseRealEstate'][] = array('ContaoEstateManager\\Video\\Video', 'addStatusToken');
-    $GLOBALS['TL_HOOKS']['parseSlideExposeGallery'][] = array('ContaoEstateManager\\Video\\Video', 'parseGallerySlide');
-    $GLOBALS['TL_HOOKS']['compileExposeStatusToken'][] = array('ContaoEstateManager\\Video\\Video', 'addStatusToken');
+    // Hooks
+    $GLOBALS['TL_HOOKS']['parseRealEstate'][] = array('ContaoEstateManager\Video\Video', 'parseRealEstate');
+    $GLOBALS['TL_HOOKS']['getStatusTokens'][] = array('ContaoEstateManager\Video\Video', 'addStatusToken');
+    $GLOBALS['TL_HOOKS']['parseSlideExposeGallery'][] = array('ContaoEstateManager\Video\Video', 'parseGallerySlide');
 }
