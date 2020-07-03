@@ -17,10 +17,16 @@ use ContaoEstateManager\EstateManager;
 class AddonManager
 {
     /**
-     * Addon name
+     * Bundle name
      * @var string
      */
-    public static $name = 'Video';
+    public static $bundle = 'EstateManagerVideo';
+
+    /**
+     * Package
+     * @var string
+     */
+    public static $package = 'contao-estatemanager/video';
 
     /**
      * Addon config key
