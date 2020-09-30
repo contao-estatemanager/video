@@ -120,7 +120,7 @@ class Video
                     else
                     {
                         // add main image from real estate
-                        $fileId = $realEstate->getMainImage();
+                        $fileId = $realEstate->getMainImageUuid();
                     }
 
                     if($fileId)
