@@ -4,4 +4,5 @@ The video extension for Contao EstateManager allows the integration and display 
 # License
 Copyright © 2020 Contao EstateManager
 
+🎫 [Get license](https://www.contao-estatemanager.com/de/erweiterungen/video.html) \
 ⚖ [License agreement](https://www.contao-estatemanager.com/de/lizenzbedingungen.html) (German)
