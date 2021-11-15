@@ -25,4 +25,6 @@ if (AddonManager::valid())
     $GLOBALS['TL_HOOKS']['parseRealEstate'][] = ['ContaoEstateManager\Video\Video', 'parseRealEstate'];
     $GLOBALS['TL_HOOKS']['getStatusTokens'][] = ['ContaoEstateManager\Video\Video', 'addStatusToken'];
     $GLOBALS['TL_HOOKS']['parseSlideExposeGallery'][] = ['ContaoEstateManager\Video\Video', 'parseGallerySlide'];
+
+    $GLOBALS['TL_HOOKS']['cemModulePreparation'][] = ['ContaoEstateManager\Video\Video', 'extendModulePreparation'];
 }

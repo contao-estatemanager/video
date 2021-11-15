@@ -21,6 +21,35 @@ use ContaoEstateManager\Translator;
 class Video
 {
     /**
+     * Expands the functions within a template which can be accessed via $this->realEstate.
+     */
+    public function extendModulePreparation($callbackName, $objModule)
+    {
+        switch ($callbackName)
+        {
+            case 'hasVideo':
+            case 'getVideoLink':
+            case 'getVideoLinks':
+                    $arrLinks = static::collectVideoLinks($objModule->links);
+                    $blnExists = null !== $arrLinks;
+
+                    switch ($callbackName)
+                    {
+                        case 'hasVideo':
+                            return $blnExists;
+
+                        case 'getVideoLink':
+                            return $arrLinks[0] ?? null;
+
+                        default:
+                            return $arrLinks;
+                    }
+        }
+
+        return null;
+    }
+
+    /**
      * Parse real estate template and add video extension.
      *
      * @param $objTemplate
