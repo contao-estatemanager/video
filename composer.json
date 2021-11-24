@@ -19,8 +19,8 @@
   ],
   "require":{
     "php":"^7.4 || ^8.0",
-    "contao/core-bundle":"^4.4",
-    "contao-estatemanager/core": "^1.0"
+    "contao/core-bundle":"^4.9",
+    "contao-estatemanager/core": "^1.1"
   },
   "require-dev": {
     "contao/manager-plugin": "^2.0",

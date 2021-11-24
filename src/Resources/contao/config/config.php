@@ -19,7 +19,7 @@ use ContaoEstateManager\Video\AddonManager;
 if (AddonManager::valid())
 {
     // Add expose module
-    $GLOBALS['FE_EXPOSE_MOD']['media']['video'] = 'ContaoEstateManager\Video\ExposeModuleVideo';
+    $GLOBALS['CEM_FE_EXPOSE_MOD']['media']['video'] = 'ContaoEstateManager\Video\ExposeModuleVideo';
 
     // Hooks
     $GLOBALS['TL_HOOKS']['parseRealEstate'][] = ['ContaoEstateManager\Video\Video', 'parseRealEstate'];
