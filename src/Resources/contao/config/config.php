@@ -15,6 +15,7 @@ declare(strict_types=1);
 $GLOBALS['TL_ESTATEMANAGER_ADDONS'][] = ['ContaoEstateManager\Video', 'AddonManager'];
 
 use ContaoEstateManager\Video\AddonManager;
+use ContaoEstateManager\Video\Video;
 
 if (AddonManager::valid())
 {
@@ -22,9 +23,9 @@ if (AddonManager::valid())
     $GLOBALS['CEM_FE_EXPOSE_MOD']['media']['video'] = 'ContaoEstateManager\Video\ExposeModuleVideo';
 
     // Hooks
-    $GLOBALS['TL_HOOKS']['parseRealEstate'][] = ['ContaoEstateManager\Video\Video', 'parseRealEstate'];
-    $GLOBALS['TL_HOOKS']['getStatusTokens'][] = ['ContaoEstateManager\Video\Video', 'addStatusToken'];
-    $GLOBALS['TL_HOOKS']['parseSlideExposeGallery'][] = ['ContaoEstateManager\Video\Video', 'parseGallerySlide'];
+    $GLOBALS['CEM_HOOKS']['parseRealEstate'][] = [Video::class, 'parseRealEstate'];
+    $GLOBALS['CEM_HOOKS']['getStatusTokens'][] = [Video::class, 'addStatusToken'];
+    $GLOBALS['CEM_HOOKS']['parseSlideExposeGallery'][] = [Video::class, 'parseGallerySlide'];
 
-    $GLOBALS['TL_HOOKS']['cemModulePreparation'][] = ['ContaoEstateManager\Video\Video', 'extendModulePreparation'];
+    $GLOBALS['CEM_HOOKS']['extendTemplateModule'][] = [Video::class, 'extendModulePreparation'];
 }
