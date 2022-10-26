@@ -20,12 +20,10 @@ use ContaoEstateManager\Video\Video;
 if (AddonManager::valid())
 {
     // Add expose module
-    $GLOBALS['CEM_FE_EXPOSE_MOD']['media']['video'] = 'ContaoEstateManager\Video\ExposeModuleVideo';
+    $GLOBALS['FE_EXPOSE_MOD']['media']['video'] = 'ContaoEstateManager\Video\ExposeModuleVideo';
 
     // Hooks
-    $GLOBALS['CEM_HOOKS']['parseRealEstate'][] = [Video::class, 'parseRealEstate'];
-    $GLOBALS['CEM_HOOKS']['getStatusTokens'][] = [Video::class, 'addStatusToken'];
-    $GLOBALS['CEM_HOOKS']['parseSlideExposeGallery'][] = [Video::class, 'parseGallerySlide'];
-
-    $GLOBALS['CEM_HOOKS']['extendTemplateModule'][] = [Video::class, 'extendModulePreparation'];
+    $GLOBALS['TL_HOOKS']['parseRealEstate'][] = [Video::class, 'parseRealEstate'];
+    $GLOBALS['TL_HOOKS']['getStatusTokens'][] = [Video::class, 'addStatusToken'];
+    $GLOBALS['TL_HOOKS']['parseSlideExposeGallery'][] = [Video::class, 'parseGallerySlide'];
 }
