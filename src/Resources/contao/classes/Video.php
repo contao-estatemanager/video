@@ -307,6 +307,13 @@ class Video
         }
 
         $arrLink = parse_url($link);
+
+        // Consider "youtu.be" short links and rewrite them
+        if (!isset($arrLink['query']) && 'youtube' === $videoType && $arrLink['host'] === 'youtu.be')
+        {
+            return $arrLink['scheme'].'://www.youtube.com/embed'. ($arrLink['path']) .'?'.http_build_query(array_merge($arrSettings, $defaultParams));
+        }
+
         parse_str($arrLink['query'], $query);
 
         // merge params
