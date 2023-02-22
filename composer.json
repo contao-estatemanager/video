@@ -45,6 +45,9 @@
     ]
   },
   "extra":{
+    "branch-alias": {
+      "dev-main": "1.0.x-dev"
+    },
     "contao-manager-plugin": "ContaoEstateManager\\Video\\ContaoManager\\Plugin"
   },
   "scripts": {
