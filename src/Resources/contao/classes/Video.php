@@ -278,7 +278,10 @@ class Video
 
                 $matches = [];
 
-                if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $link, $matches))
+                if (
+                    preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/|youtube\.com/shorts/)([^"&?/ ]{11})%i', $link, $matches) &&
+                    isset($matches[1])
+                )
                 {
                     $parsedLink = 'https://www.youtube.com/embed/'.$matches[1];
                 }
@@ -299,7 +302,10 @@ class Video
 
                 $matches = [];
 
-                if (preg_match('%vimeo\.com/(?:channels/(?:\w+/)?|groups/(?:[^/]+)/videos/|album/(?:\d+)/video/)?(\d+)(?:$|/|\?)%i', $link, $matches))
+                if (
+                    preg_match('%vimeo\.com/(?:channels/(?:\w+/)?|groups/(?:[^/]+)/videos/|album/(?:\d+)/video/)?(\d+)(?:$|/|\?)%i', $link, $matches) &&
+                    isset($matches[1])
+                )
                 {
                     $parsedLink = 'https://player.vimeo.com/video/'.$matches[1];
                 }
@@ -308,10 +314,19 @@ class Video
 
         $arrLink = parse_url($link);
 
-        // Consider "youtu.be" short links and rewrite them
-        if (!isset($arrLink['query']) && 'youtube' === $videoType && $arrLink['host'] === 'youtu.be')
+        if (!isset($arrLink['query']) && 'youtube' === $videoType )
         {
-            return $arrLink['scheme'].'://www.youtube.com/embed'. ($arrLink['path']) .'?'.http_build_query(array_merge($arrSettings, $defaultParams));
+            // Consider "youtu.be" short links and rewrite them
+            if ($arrLink['host'] === 'youtu.be')
+            {
+                return $arrLink['scheme'].'://www.youtube.com/embed'. ($arrLink['path']) .'?'.http_build_query(array_merge($arrSettings, $defaultParams));
+            }
+
+            // Consider YouTube shorts
+            if ($arrLink['host'] === 'youtube.com')
+            {
+                return $parsedLink.'?'.http_build_query(array_merge($arrSettings, $defaultParams));
+            }
         }
 
         parse_str($arrLink['query'], $query);
@@ -319,7 +334,7 @@ class Video
         // merge params
         $param = array_merge($query, $arrSettings, $defaultParams);
 
-        if ($parsedLink)
+        if (!!$parsedLink)
         {
             return $parsedLink.'?'.http_build_query($param);
         }
